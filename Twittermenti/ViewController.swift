@@ -10,9 +10,9 @@ class ViewController: UIViewController {
     @IBOutlet weak var textField: UITextField!
     @IBOutlet weak var sentimentLabel: UILabel!
     
-    let sentimentClassifier = try! TweetSentimentClassifier(configuration: MLModelConfiguration())
+    let checkSentiment = try! TweetSentimentClassifier(configuration: MLModelConfiguration())
 
-    let swifter = Swifter(consumerKey: "LTReJyreyyuz4SWjVABuA1WKI", consumerSecret: "ajf107xfd6869heCG8Ptn8iztfFHBWPIxLkFGvsmoEwI7MKZcz")
+    let swifterFramework = Swifter(consumerKey: "insert_key", consumerSecret: "insert_secret")
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -22,7 +22,7 @@ class ViewController: UIViewController {
         
         if let searchText = textField.text {
                
-               swifter.searchTweet(using: searchText, lang: "en", count: 100, tweetMode: .extended, success: {(results, metadata) in
+               swifterFramework.searchTweet(using: searchText, lang: "en", count: 100, tweetMode: .extended, success: {(results, metadata) in
                    
                    var tweets = [TweetSentimentClassifierInput]()
                    
@@ -35,31 +35,31 @@ class ViewController: UIViewController {
                    
                    do {
                        
-                       let predictions = try self.sentimentClassifier.predictions(inputs: tweets)
+                       let predictions = try self.checkSentiment.predictions(inputs: tweets)
                        
-                       var sentimentScore = 0
+                       var checkValue = 0
                        
                        for pred in predictions {
                            let sentiment = pred.label
                            if sentiment == "Pos" {
-                               sentimentScore += 1
+                               checkValue += 1
                            } else if sentiment == "Neg" {
-                               sentimentScore -= 1
+                               checkValue -= 1
                            }
                        }
                     
                                             
-                        if sentimentScore > 20 {
+                        if checkValue > 20 {
                             self.sentimentLabel.text = "😍"
-                        } else if sentimentScore > 10 {
+                        } else if checkValue > 10 {
                             self.sentimentLabel.text = "😀"
-                        } else if sentimentScore > 0 {
+                        } else if checkValue > 0 {
                             self.sentimentLabel.text = "🙂"
-                        } else if sentimentScore == 0 {
+                        } else if checkValue == 0 {
                             self.sentimentLabel.text = "😐"
-                        } else if sentimentScore > -10 {
+                        } else if checkValue > -10 {
                             self.sentimentLabel.text = "😕"
-                        } else if sentimentScore > -20 {
+                        } else if checkValue > -20 {
                             self.sentimentLabel.text = "😡"
                         } else {
                             self.sentimentLabel.text = "🤮"
