@@ -1,4 +1,4 @@
-# Stock-Market-Predictor-App-Using-Twitter-API
+# Stock-Market-Analyzer-App-Using-Twitter-API
 This app was written in Swift and XCode was used as the source-code editor. The app is used to predict stock market trends. A Twitter API was used in this project, more specifically Twitter's Standard Search API.
 
 You can clone this project and open it in XCode. However, the swifter framework must be cloned first https://github.com/mattdonnelly/Swifter seperately, in order for the project to run. 
